@@ -36,7 +36,7 @@ mission "Avgi: First Contact"
 	description "Accompany the alien ship to the destination marked on your map."
 	source
 		attributes "avgi"
-	destination "Peripheria"
+	destination "Feo Platform"
 	mark "Arche"
 	clearance
 	on offer
@@ -150,8 +150,8 @@ mission "Avgi: First Contact"
 			`	Unsure of the intentions of the alien vessel, you remain silent. However, it seems the aliens have other intentions, as you shortly receive a transmission with an encoding your ship's computer is able to interpret, in a standard human data format. The message is short and direct:`
 
 			label transmission
-			`	"Salutations. I am of the Avgi. You human, question? Important. You will follow. This space, Twilight, not safe. You have hyperdrive, correct? Emphasis. Space we will travel is unstable, a maze. Follow closely and be careful."`
-			`	The message includes an alien-looking star chart, with a trail of marked systems leading to a system far to the south. Something appears to have been lost in translation, as the systems are unmarked past a certain point and are instead labeled as "shrouded," whatever that means. Just as you are still processing first contact with an alien civilization, a group of the same ships that attacked you earlier jump into the system.`
+			`	"Salutations. I am of the Avgi. You human, question? Important. You will follow. This space, Twilight, not safe. You have hyperdrive, correct? Emphasis. Space we will travel is unstable, a maze. Follow closely and be careful. Rest stop ahead. Questions answered there."`
+			`	The message includes an alien-looking star chart, with a marked system in the south. Something appears to have been lost in translation, as the edge of the map has more unmarked systems labeled as "shrouded," whatever that means. Just as you are still processing first contact with an alien civilization, a group of the same ships that attacked you earlier jump into the system.`
 				launch
 
 	npc
@@ -206,17 +206,12 @@ mission "Avgi: First Contact"
 		"reputation: Avgi (Consonance)" >?= 5
 		"reputation: Avgi (Twilight Guard)" >?= 5
 
+
+
 	on enter "Arche"
-		mark "Ballad"
-		unmark "Arche"
-
-	on enter "Ballad"
-		unmark "Ballad"
-
-	on enter "Concerto"
 		conversation
-			`After a confusing journey through the winding hyperlanes, you finally arrive at the final system the alien marked on your map. You notice that your flight computer has failed to record the locations of most of the systems you passed through, probably due to the same anomaly that made your ship almost completely blind within the region. This region appears unaffected however, and your computer is able to chart its position as usual.`
-			`	The alien ship pings you, indicating to follow as it flies towards what looks to be a large inhabited station in the system. Shaped like a circular disk, a large cutout in the center exposes hundreds of docking bays and what looks to be a spaceport. As you watch, a trio of sleek-looking fightercraft launch from the station and take up escort positions around you and the other alien ship you have followed all this way. You can only assume your escort is in communication with the station authorities.`
+			`After a few system transits, you arrive at the system the alien marked on your map.`
+			`	The alien ship pings you, indicating to follow as it flies towards what looks to be a station of some sort. Long and lean, the station appears to be built around some sort of spinal superweapon, currently firing a beam somewhere into the outsystem. As you watch, a trio of sleek-looking fightercraft launch from the station and take up escort positions around you and the other alien ship you have followed all this way. You can only assume your escort is in communication with the station authorities.`
 
 	on fail
 		dialog `The alien ship has been destroyed. If you want to continue the Avgi story, revert to the autosave or another earlier snapshot of the game.`
@@ -225,11 +220,52 @@ mission "Avgi: First Contact"
 		dialog `You have reached <planet>, but you left the alien ship behind! Better depart and wait for them to properly introduce you.`
 
 	on complete
-		"reputation: Avgi" += 10
-		"reputation: Avgi (Consonance)" += 10
-		"reputation: Avgi (Twilight Guard)" += 10
+		"reputation: Avgi" += 5
+		"reputation: Avgi (Consonance)" += 5
+		"reputation: Avgi (Twilight Guard)" += 5
 		set "discovered avgi"
 		event "outer limits label"
+
+mission "Avgi: Formal Contact"
+	landing
+	name "The Consonance of the Avgi"
+	description "Reach <destination>, where the Avgi Consonance government is. Find who set up this message."
+	source "Feo Platform"
+	destination "Peripheria"
+	to offer
+		has "Avgi: First Contact: done"
+	on offer
+		log `Met an alien species calling themselves the Avgi. Their home cluster appears infested with hostile ships from some unknown advanced civilization. Made contact with a scout ship and followed it to a military base at the southern edge of the occupied zone. Informed of a pre-existing agreement to allow humans to purchase civilian technology.`
+		conversation
+			`	Your companion speeds ahead, neatly pulling into one of the drydocks ringing the laser. When you attempt to follow, the fightercraft zip in front of you, herding you away from the station, though not firing.`
+			`	As you are about to depart, a message comes in on the same frequency band the escort used before, in the same data format. Predictably, it's the same Avgi.`
+			`	"Human, remain. This space, safe. Do not depart. Information to give. Authorities to discuss. Review this." Your computer pings to inform you that a short audio packet has been sent- two, actually. One labeled Human, and the other Quarg? The sender may not have known who would respond.`
+			`	While the wait drags on, you consider what to do.`
+			choice
+				`	(Watch the station.)`
+					goto beam
+				`	(Listen to the human recording.)`
+					goto humanhelp
+				`	(Listen to the quarg recording.)`
+					goto quarghelp
+			label beam
+			`	The Avgi beam weapon is impressive. It appears to be firing at something in the inner-system now, as the entire station is slowly slewing to point towards the sun. Perhaps they're trying to cover the hyperlanes for when these invaders come through.`
+			`	You adjust course slightly to stick away from the Avgi deathbeam, and the fighters shift with you. Presumably they're no eager to wander into it than you are.`
+				goto dockinggrant
+			label humanhelp
+			`	You press play on your console and hear a tale of woe. Several people talk intermittently, describing a tale where a human ship somehow entered Avgi space without Jump Drive in a way that they don't bother to explain. What they are insistent on, several times, is that the Avgi are friendly and haven't harmed them, and that there is an agreement to allow incoming humans to dock on Feo Station.`
+			`	"We've been helping them out in their fight, and they agreed that anyone who got caught on the trapline"- whatever that means- "would be allowed to reprovision and come join us. They believe they owe us significantly, and they may not be wrong. Once you get to Feo, they'll let you dock. Go south. The government's there. So are we, and we'd love another set of friendly faces, even if you're stuck here like us."`
+				goto dockinggrant
+			label quarghelp
+			`	You press play on your console and hear a plea for help. Several people talk intermittently, describing a tale where a human ship somehow entered Avgi space without Jump Drive in a way that they don't bother to explain. What they are insistent on, several times, is that the Avgi are friendly and haven't harmed them, and that they very much need aid.`
+			`	"Please, honored Quarg, rescue us from our accidental imprisonment and help the Avgi. You have always acted to humanity's benefit in the past. We can attest that the Avgi have done nothing to deserve this attack. If you truly look to shepherd younger races, help them!" `
+			`	You reflect that it's a pity the Quarg don't know. Perhaps you can tell them, if you ever get out of this mess. `
+				goto dockinggrant
+				label dockinggrant
+			`	Your console pings with another incoming message, and the fighters veer off- perhaps you're in the clear now.`
+			`	"Human, dock. Message says Avgi help reach Consonance. Consonance is in Peripheria. Peripheria is past Shroud. Dock. Refuel. Reequip. Permisssion to use equipment/fuel granted. Other humans agree long time ago. More humans good. More humans much good! Follow map to Peripheria."`
+			`	The message includes an alien-looking star chart, with a marked system even further south. The edge of the map has more unmarked systems labeled as "shrouded," even though your sensors can see them right now. Perhaps it's a cultural thing. `
+			`	You shrug and move in to dock. The "shroud", whatever it is, can wait.`
 
 
 
@@ -242,7 +278,7 @@ mission "Avgi: Humans From the Deep"
 	to offer
 		has "Avgi: First Contact: done"
 	on offer
-		log `Met an alien species calling themselves the Avgi. Their home cluster appears infested with hostile ships from some unknown advanced civilization. Made contact with a scout ship and followed it back through a region south of Avgi space called the Tangled Shroud. Met with members of the Avgi government and made an agreement to let you purchase civilian technology.`
+		log `Passed through a region of anomalous space known as the Tangled Shroud. Met with representatives of the Avgi government. Informed of prior human contact.`
 		log "Factions" "Avgi" `The Avgi are a young race of aliens resembling large, colorful dragonflies, which inhabit the Twilight Nebula in this part of the galaxy. After an overwhelming invasion by ships they call the Aberrant, most of their surviving spacecraft fled south through a maze-like region called the Tangled Shroud.`
 		log "Factions" "Avgi Consonance" `The exiled Avgi seem to be led by a central government called the Consonance, but there are many who do not recognize this government.`
 		log "People" "Asime" `Asime is one of the three First Speakers of the Consonance Assembly. While reserved, Asime appears to be defensive about the decisions made by the Consonance in response to the Aberrant incursion.`
@@ -251,7 +287,6 @@ mission "Avgi: Humans From the Deep"
 		set "avgi: met lait"
 		set "language: Avgi"
 		conversation
-			`	Your companion speeds ahead, neatly pulling into one of the bays on the outer levels. When you attempt to follow, the fightercraft zip in front of you, herding you towards a different bay closer to the middle decks.`
 			`	The docking bay is full of activity, and you finally get your first glimpse at this new species up close. They appear to be something analogous to an Earth dragonfly, or maybe closer to a damselfly - a meter and a half long on average, and with six limbs and wings. A group of them quickly close in around your ship as you finally land in a clear space, moving precisely. These aliens have clearly been expecting you.`
 			`	None of the aliens look to be armed, but are arrayed around your ship in a clearly defensive circular pattern, both on foot and flitting about in the air. Some of them look to be wearing some kind of body armor, but they don't seem to be carrying any obvious weapons. As you step out of the <ship>, noticing the lighter gravity, a small group quickly moves forward to meet you.`
 			choice
