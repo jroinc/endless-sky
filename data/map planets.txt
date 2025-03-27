@@ -1821,7 +1821,7 @@ planet "Feo Platform"
 	outfitter "Avgi Nanomaterials"
 	outfitter "Avgi Twilight Guard"
 	outfitter "Avgi Atomics"
-	"required reputation" 10
+	"required reputation" 5
 	security 0.9
 	tribute 1800
 		threshold 9000
